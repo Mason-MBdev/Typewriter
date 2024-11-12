@@ -1,6 +1,6 @@
 # RetroComm
 
-RetroComm is a retro-style chat application designed to give a terminal-like chat experience on the web. It allows users to join specific chat rooms, send files, customize their display colors, and interact using simple commands. This README provides an overview of the setup and features available in RetroComm.
+RetroComm is a  terminal style chat application designed to give a retro chat experience on the web. It allows users to join chatrooms and send files, with a few customizable and interactive elements. This README provides an overview of setting up and using this project yourself. This was mainly an exercise in networking and sockets, so I can finally learn how to make multiplayer chess.
 
 ## Features
 
@@ -46,17 +46,10 @@ RetroComm uses a web-based client that resembles a terminal interface. Once conn
 - **Command Input**: Type commands to navigate, join rooms, and send messages, etc.
 - **File Upload Section**: Hidden until the user joins a room, enabling file sharing within the room.
 
+### Current Commands (more functions coming when I have time)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+- **ls**	      - List all online rooms
+- **join x** 	   - Join room with name 'x', will create a room if there isn't one with that name
+- **username x** - set username to 'x'
+- **exit** 	   - Leave current room
+- **clear** 	   - Clear all text

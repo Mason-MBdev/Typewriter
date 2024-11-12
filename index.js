@@ -20,15 +20,16 @@ app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
 });
 
-// handles user right after connection
+// Handle: user connection (loaded index.html page)
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
   socket.emit('chat message', welcomeMessage);
 
-  let isListeningToMessages = false; // Flag to track if we are listening to messages
+  let isListeningToMessages = false;
 
+  // Handle: user join room
   socket.on('join room', (room_code) => {
-    // Leave any room the user might currently be in
+    // Leave any room the user is currently in
     const currentRooms = Object.keys(socket.rooms);
     currentRooms.forEach((room) => {
       if (room !== socket.id) {
@@ -42,7 +43,7 @@ io.on('connection', (socket) => {
     socket.join(room_code);
     console.log(`${socket.id} joined room: ${room_code}`);
 
-    // Send existing messages to the newly joined user
+    // Emit history of room chat for new user
     if (rooms[room_code] && rooms[room_code].messages) {
       socket.emit('chat history', rooms[room_code].messages);
     }
@@ -53,10 +54,10 @@ io.on('connection', (socket) => {
     }
     rooms[room_code].users_connected.push(socket.id);
 
-    // upon completion of joining propcesses, emit join message to other users
+    // Once joined, emit join message to other users
     io.to(room_code).emit('chat message', `${room_code}/Server: "${socket.id} joined room: ${room_code}"`);
 
-    // Only set up the message listener once per socket
+    // Set up message listener once per socket
     if (!isListeningToMessages) {
       socket.on('chat message', (msg) => {
         console.log(`Message received from ${socket.id} in ${room_code}: ${msg}`);
@@ -68,15 +69,15 @@ io.on('connection', (socket) => {
         io.to(room_code).emit('chat message', msg);
         console.log(rooms[room_code].messages);
       });
-      isListeningToMessages = true; // Set the flag to true
+      isListeningToMessages = true; // Now listening to messages
     }
 
-    // HANDLE: user disconnect from room
+    // Handle: user disconnect from room
     socket.on('leave room', () => {
       console.log(`${socket.id} is leaving room: ${room_code}`);
       io.to(room_code).emit('chat message', `${socket.id} has left the room`);
-      socket.leave(room_code);
       rooms[room_code].users_connected = rooms[room_code].users_connected.filter(userId => userId !== socket.id);
+      socket.leave(room_code);
     });
   });
   
@@ -92,7 +93,7 @@ io.on('connection', (socket) => {
       }
   });
 
-  // HANDLE: LS list all rooms
+  // Handle: 'ls' - list all rooms
   socket.on('list rooms', () => {
       console.log("user requesting list");
       let roomsList = "Rooms avaliable:\n";
@@ -106,7 +107,7 @@ io.on('connection', (socket) => {
       socket.emit('chat message', roomsList);
   });
 
-  // HANDLE: user disconnect from server
+  // Handle: disconnect user from server
   socket.on('disconnect', () => {
     console.log(`${socket.id} disconnected`);
     for (const room of Object.keys(rooms)) {
