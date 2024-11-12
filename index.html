@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>RetroComm</title>
+    <style>
+        body {
+            overflow: hidden;
+            background-color: #000;
+            color: #EDE9F1;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .terminalArrow {
+            font-size: 27px;
+            margin-top: 11px;
+
+        }
+        
+        .header {
+            position: fixed;
+            display: flex;
+            flex-direction: row;
+            height: 7.5vh;
+            width: 100%;
+            justify-content: left;
+            align-items: center;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 1);
+            gap: 20px;
+            border-bottom: 1px solid #EDE9F1;
+            min-height: 80px;
+            padding-left: 20px;
+            padding-top: 10px;
+        }
+        
+        .fileUploadSection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fileList {
+            list-style-type: none;
+            margin-top: 0.5rem;
+            padding: 0;
+            color: #EDE9F1;
+        }
+
+        .fileItem {
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .fileItem a {
+            color: #EDE9F1;
+            text-decoration: none;
+        }
+
+        .fileInput {
+            background: #333;
+            border: 1px solid #EDE9F1;
+            padding: 0.5rem 1rem;
+            margin-top: 10px;
+            border-radius: 0;
+            color: #EDE9F1;
+            cursor: pointer;
+        }
+
+        .fileInput:hover {
+            background: #444;
+        }
+
+        .form {
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            width: 100%;
+            height: 3rem;
+            box-sizing: border-box;
+            justify-content: center;
+            align-content: center;
+            gap: 20px;
+            padding: 0px 20px 0px 20px;
+        }
+
+        .input {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 17px;
+            background: #111;
+            color: #ffffff;
+            padding: 0 1rem;
+            flex-grow: 1;
+            border-radius: 0;
+            margin: 0.25rem;
+        }
+
+        .input:focus {
+            outline: none;
+            background: #333;
+        }
+        
+        .input::placeholder {
+            color: white;
+        }
+
+        button {
+            background: #333;
+            border: 1px solid #EDE9F1;
+            padding: 0 1rem;
+            margin: 0.25rem;
+            border-radius: 0;
+            color: #EDE9F1;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+            padding: 1rem;
+            height: auto;
+            background-color: #010101;
+        }
+
+        #messages > li {
+            padding: 0.5rem 0;
+            white-space: pre-wrap;
+        }
+
+        .womp {
+            bottom: 0;
+            background: #000;
+            padding: 0.5rem;
+            width: 100%;
+        }
+
+        .hidden {
+            display: none;
+        }
+        
+        .apptitle {
+            align-self: center;
+            justify-self: center;
+            text-align: center;
+            width: 450px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="apptitle">
+            <pre style="font-weight: 700;">
+_________                 _             _     __  __                                          
+|__   __|                (_)           | |   |  \/  |                                         
+   | | ___ _ __ _ __ ___  _ _ __   __ _| |   | \  / | ___  ___ ___  ___ _ __   __ _  ___ _ __ 
+   | |/ _ \ '__| '_ ` _ \| | '_ \ / _` | |   | |\/| |/ _ \/ __/ __|/ _ \ '_ \ / _` |/ _ \ '__|
+   | |  __/ |  | | | | | | | | | | (_| | |   | |  | |  __/\__ \__ \  __/ | | | (_| |  __/ |   
+   |_|\___|_|  |_| |_| |_|_|_| |_|\__,_|_|   |_|  |_|\___||___/___/\___|_| |_|\__, |\___|_|   
+                                                                               __/ |          
+                                                                              |___/           
+            </pre>
+        </h1>
+        <h2 id="roomName">Current Room: Home</h2>
+        <h2 id="usernameElement">Username: N/A</h2>
+        <input type="color" id="colorPicker" value="#EDE9F1" style="margin-left: 20px;">
+    </div>
+    
+    <div style="display: flex; flex-direction: row; margin-top: 100px; justify-content: space-between; margin-left: 20px; margin-right: 40px;">
+        <ul id="messages"></ul>
+        <div id="fileUploadSection"class="fileUploadSection hidden">
+            <h2>Upload/Download Files</h2>
+            <input type="file" id="fileInput" class="fileInput" />
+            <ul id="fileList" class="fileList"></ul>
+        </div>
+    </div>
+    <div class="womp">
+        <form class="form" id="form" action="">
+            <h1 class="terminalArrow"> > </h1><input id="input" class="input" autocomplete="off" placeholder=""/><button class="hidden">Send</button><button id="backButton" class="hidden">Exit room</button>
+        </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const form = document.getElementById('form');
+        const input = document.getElementById('input');
+        const messages = document.getElementById('messages');
+        const roomName = document.getElementById('roomName');
+        const usernameElement = document.getElementById('usernameElement');
+        const backButton = document.getElementById('backButton');
+        // Select the color picker
+        const colorPicker = document.getElementById('colorPicker');
+        const fileUploadElement = document.getElementById('fileUploadSection');
+
+        // Function to change the terminal's color
+        function changeTerminalColor(color) {
+            document.body.style.color = color;  // Change the text color
+            document.querySelector('.header').style.borderColor = color;  // Change the header border color
+            document.querySelector('.input').style.borderColor = color;;  // Change input border color
+            document.querySelector('#backButton').style.borderColor = color;
+            document.querySelector('#backButton').style.color = color;
+            document.querySelector('button').style.borderColor = color;  // Change button border color
+            document.querySelector('button').style.color = color;  // Change button border color
+            document.querySelector('.womp').style.borderTopColor = color;  // Change the bottom border color
+            document.querySelector('.terminalArrow').style.color = color;  // Change terminal arrow color
+            document.querySelector('#roomName').style.color = color;  // Change the room name color
+            document.querySelector('#usernameElement').style.color = color;  // Change the username color            
+            document.querySelector('.fileInput').style.color = color; // changing file input color
+            console.log("Color changed to: " + color);
+        }
+
+        // Set up the color picker event listener
+        colorPicker.addEventListener('input', (e) => {
+            const selectedColor = e.target.value;  // Get the selected color
+            console.log("New terminal color: " + selectedColor);
+            changeTerminalColor(selectedColor);  // Apply the color change
+        });
+        
+        let fileToSend = null;
+        let username = "N.A";
+        let currentRoom = "Home";
+        let instructions = `
+ls	   - List all online rooms
+join x 	   - Join room with name 'x', will create a room if there isn't one with that name
+username x - set username to 'x'
+exit 	   - Leave current room
+clear 	   - Clear all text`;
+
+        // Handle file selection and upload
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            const file = e.target.files[0]; // Get the selected file
+            if (file) {
+                // Show the selected file in the UI (optional)
+                const fileList = document.getElementById('fileList');
+                const fileItem = document.createElement('li');
+                fileItem.textContent = `Uploading: ${file.name} (${file.size} bytes)`;
+                fileList.appendChild(fileItem);
+
+                // Read the file as base64
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const fileData = event.target.result; // This is the file data in base64 format
+                    socket.emit('send file', { fileName: file.name, fileData }); // Send the file data to the server
+                };
+                reader.readAsDataURL(file); // Read the file as base64 (this could be done in chunks for larger files)
+            }
+        });
+
+        // Send the command or message to the server
+        form.addEventListener('submit', (e) => {
+            console.log("command sending");
+            e.preventDefault();
+            if (input.value) {
+            
+                // Returns a list of all running rooms from the server
+                if (input.value == "ls") {
+                    console.log("listing rooms");
+                    socket.emit('list rooms');
+                }
+                
+                // Sending a file
+                if (fileToSend) {
+                    sendFile(fileToSend);
+                    fileToSend = null; // Reset after sending
+                }
+                
+                // Help, displays list of all commands
+                else if (input.value == "help") {
+                    const item = document.createElement('li');
+                    item.textContent = instructions;
+                    messages.appendChild(item);
+                }
+                
+                // Create or join a room (currently handled the same by server)
+                else if (input.value.startsWith("join ")) {
+                    console.log("mkdir or cd command called");
+                    if (currentRoom !== "Home") {
+                        socket.emit('leave room'); // Leave the current room
+                    }
+                    let roomName = input.value.split(" ")[1]; // Get room name after "mkdir"
+                    roomName.textContent = "Current Room: " + roomName;
+                    console.log(`Creating room: ${roomName}`);
+                    socket.emit('join room', roomName)
+                    console.log("mkdir or cd command ending");
+                    messages.innerHTML = '';
+                    fileUploadElement.classList.remove("hidden");
+                } 
+                
+                // Leave current room
+                else if (input.value === "exit") {
+                    console.log("Exiting the room...");
+                    socket.emit('leave room');
+                    const item = document.createElement('li');
+                    item.textContent = `You are leaving the room`;
+                    messages.appendChild(item);
+                    fileUploadElement.classList.add("hidden");
+                }
+                
+                // Change Username
+                else if (input.value.startsWith("username ")) {
+                    console.log("Changing Username");
+                    let userinput = input.value.split(" ")[1];
+                    username = userinput;
+                    if (username) {
+                        usernameElement.textContent = "Username: " + username;
+                        console.log("New username: "+usernameElement.textcontent);
+                    }
+                }
+                
+                // clear Terminal
+                else if (input.value == "clear") {
+                    console.log("Clearing the terminal");
+                    messages.innerHTML = '';
+                }
+                
+                // else, send command as a chat message
+                else {
+                    const message = `${currentRoom}/${username}: ${input.value}`;
+                    socket.emit('chat message', message);
+                }
+            }
+            input.value = '';
+        });
+
+        // Back button functionality
+        backButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("back button pressed");
+            if (currentRoom !== "Home") {
+                console.log("First condition passed");
+                socket.emit('leave room'); // Notify the server
+                currentRoom = "Home";
+                roomName.textContent = "Current Room: " + currentRoom;
+                
+                messages.innerHTML = '';
+                const item = document.createElement('li');
+                item.textContent = `You are leaving the room`;
+                messages.appendChild(item);
+            }
+        });
+
+        // Display messsages as they are recieved
+        socket.on('chat message', (msg) => {
+            const item = document.createElement('li');
+            item.textContent = msg;
+            messages.appendChild(item);
+            // Scroll to the bottom of the message area
+            messages.scrollTop = messages.scrollHeight;
+        });
+
+        // Display history of messages sent in a joined room
+        socket.on('chat history', (history) => {
+            messages.innerHTML = '';
+            history.forEach(msg => {
+                const item = document.createElement('li');
+                item.textContent = msg;
+                messages.appendChild(item);
+            });
+            // Scroll to the bottom of the message area
+            messages.scrollTop = messages.scrollHeight;
+        });
+        
+        // Handle receiving a file from the server
+        socket.on('receive file', (file) => {
+            // Display the file as a download link
+            const fileList = document.getElementById('fileList');
+            const fileItem = document.createElement('li');
+
+            // Create a link to download the file
+            const downloadLink = document.createElement('a');
+            downloadLink.href = file.fileData; // Base64 data URL
+            downloadLink.download = file.fileName; // Set the download file name
+            downloadLink.textContent = `Download ${file.fileName}`;
+
+            // Append the link to the file item and then to the list
+            fileItem.appendChild(downloadLink);
+            fileList.appendChild(fileItem);
+        });
+    </script>
+</body>
+</html>
