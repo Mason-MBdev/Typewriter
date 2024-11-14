@@ -28,7 +28,7 @@ To run Typewriter locally, follow these steps:
     npm install
 3. Start the server
    ```bash
-   node server.js
+   node index.js
 4. Access Typewriter: Open your web browser and navigate to http://localhost:3000.
 
 ### 5. Usage Section
