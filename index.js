@@ -10,7 +10,7 @@ const io = new Server(server);
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const welcomeMessage = `Home/Server: 
-Hello, welcome to terminal messenger,
+Hello, welcome to Typewriter!
 You are now connected.
 Type 'help' to see commands.`;
 

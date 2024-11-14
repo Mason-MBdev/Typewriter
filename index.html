@@ -7,7 +7,7 @@
         body {
             overflow: hidden;
             background-color: #000;
-            color: #EDE9F1;
+            color: #E1C2FF;
             font-family: 'Courier New', Courier, monospace;
             margin: 0;
             padding-bottom: 3rem;
@@ -39,13 +39,13 @@
             display: flex;
             flex-direction: row;
             height: 7.5vh;
-            width: 100%;
-            justify-content: left;
+            width: 100vw;
+            justify-content: space-between;
             align-items: center;
             z-index: 9999;
             background: rgba(0, 0, 0, 1);
             gap: 20px;
-            border-bottom: 1px solid #EDE9F1;
+            border-bottom: 1px solid #E1C2FF;
             min-height: 80px;
             padding-left: 20px;
             padding-top: 10px;
@@ -61,7 +61,7 @@
             list-style-type: none;
             margin-top: 0.5rem;
             padding: 0;
-            color: #EDE9F1;
+            color: #E1C2FF;
         }
 
         .fileItem {
@@ -70,17 +70,17 @@
         }
 
         .fileItem a {
-            color: #EDE9F1;
+            color: #E1C2FF;
             text-decoration: none;
         }
 
         .fileInput {
             background: #333;
-            border: 1px solid #EDE9F1;
+            border: 1px solid #E1C2FF;
             padding: 0.5rem 1rem;
             margin-top: 10px;
             border-radius: 0;
-            color: #EDE9F1;
+            color: #E1C2FF;
             cursor: pointer;
         }
 
@@ -122,11 +122,11 @@
 
         button {
             background: #333;
-            border: 1px solid #EDE9F1;
+            border: 1px solid #E1C2FF;
             padding: 0 1rem;
             margin: 0.25rem;
             border-radius: 0;
-            color: #EDE9F1;
+            color: #E1C2FF;
             cursor: pointer;
         }
 
@@ -164,7 +164,16 @@
             align-self: center;
             justify-self: center;
             text-align: center;
-            width: 450px;
+            width: 250px;
+        }
+
+        .infobox {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            margin-right: 65px;
         }
         
     </style>
@@ -172,21 +181,21 @@
 <body>
     <div class="header">
         <h1 class="apptitle">
-            <pre style="font-weight: 500; font-size: 5px;">
+            <pre style="font-weight: 500; font-size: px;">
+  ______                              _ __           
+ /_  __/_  ______  ___ _      _______(_) /____  _____
+  / / / / / / __ \/ _ \ | /| / / ___/ / __/ _ \/ ___/
+ / / / /_/ / /_/ /  __/ |/ |/ / /  / / /_/  __/ /    
+/_/  \__, / .___/\___/|__/|__/_/  /_/\__/\___/_/     
+    /____/_/                                         
 
-░▒▓███████▓▒░░▒▓████████▓▒░▒▓████████▓▒░▒▓███████▓▒░ ░▒▓██████▓▒░ ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓██████████████▓▒░░▒▓██████████████▓▒░  
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░         ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░         ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓███████▓▒░░▒▓██████▓▒░    ░▒▓█▓▒░   ░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░         ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░         ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░ 
-░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░  ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░ ░▒▓██████▓▒░ ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░ 
-                                                                                                                                        
             </pre>
         </h1>
-        <h2 id="roomName">Current Room: Home</h2>
-        <h2 id="usernameElement">Username: N/A</h2>
-        <input type="color" id="colorPicker" value="#EDE9F1" style="margin-left: 20px;">
+        <div class="infobox">
+            <h2 id="roomName">Current Room: Home</h2>
+            <h2 id="usernameElement">Username: N/A</h2>
+            <input type="color" id="colorPicker" value="#E1C2FF" style="margin-left: 20px;">
+        </div>
     </div>
     
     <div style="display: flex; flex-direction: row; margin-top: 100px; justify-content: space-between; margin-left: 20px; margin-right: 40px;">

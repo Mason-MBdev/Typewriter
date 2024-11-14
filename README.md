@@ -1,6 +1,6 @@
-# RetroComm
+# Typewriter
 
-RetroComm is a  terminal style chat application designed to give a retro chat experience on the web. It allows users to join chatrooms and send files, with a few customizable and interactive elements. This README provides an overview of setting up and using this project yourself. This was mainly an exercise in networking and sockets, so I can finally learn how to make multiplayer chess.
+Typewriter is a  terminal style chat application designed to give a retro chat experience on the web. It allows users to join chatrooms and send files, with a few customizable and interactive elements. This README provides an overview of setting up and using this project yourself. This was mainly an exercise in networking and sockets, so I can finally learn how to make multiplayer chess.
 
 ## Features
 
@@ -17,19 +17,19 @@ RetroComm is a  terminal style chat application designed to give a retro chat ex
 
 ## Installation
 
-To run RetroComm locally, follow these steps:
+To run Typewriter locally, follow these steps:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/username/RetroComm.git
-   cd RetroComm
+   git clone https://github.com/username/Typewriter.git
+   cd Typewriter
 2. **Install dependencies: Install the server dependencies (e.g., Socket.IO) using npm:**:
     ```bash
     npm install
 3. Start the server
    ```bash
    node server.js
-4. Access RetroComm: Open your web browser and navigate to http://localhost:3000.
+4. Access Typewriter: Open your web browser and navigate to http://localhost:3000.
 
 ### 5. Usage Section
 
@@ -37,7 +37,7 @@ To run RetroComm locally, follow these steps:
 
 ## Usage
 
-RetroComm uses a web-based client that resembles a terminal interface. Once connected, users can set a username, join chatrooms, send messages & files, and interact with the tool using the cmd line.
+Typewriter uses a web-based client that resembles a terminal interface. Once connected, users can set a username, join chatrooms, send messages & files, and interact with the tool using the cmd line.
 
 ### Basic Layout
 
