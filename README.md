@@ -1,6 +1,6 @@
 # Typewriter
 
-Typewriter is a  terminal style chat application designed to give a retro chat experience on the web. It allows users to join chatrooms and send files, with a few customizable and interactive elements. This README provides an overview of setting up and using this project yourself. This was mainly an exercise in networking and sockets, so I can finally learn how to make multiplayer chess.
+Typewriter is a terminal-style chat application. It allows users to join chatrooms and send files, with a few customizable and interactive elements. This README provides an overview of setting up and using this project yourself. This was mainly an exercise in networking and sockets, so I can finally learn how to make multiplayer chess.
 
 ## Features
 
