@@ -16,6 +16,9 @@ Type 'help' to see commands.`;
 
 const rooms = {};
 
+// Serve static files from the 'public' directory
+app.use(express.static(join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
   res.sendFile(join(__dirname, 'index.html'));
 });
